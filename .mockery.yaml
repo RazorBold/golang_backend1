@@ -1,0 +1,21 @@
+# Config untuk mockery v2
+# Jalankan: mockery --all
+# Atau per interface: mockery --name=UserRepository
+
+quiet: false
+disable-version-string: true
+with-expecter: true
+outpkg: mocks
+dir: internal/mocks
+
+packages:
+  github.com/RazorBold/golang_backend1/internal/repository:
+    interfaces:
+      UserRepository:
+      RefreshTokenRepository:
+      ApplicationRepository:
+      DeviceRepository:
+      DeviceDataRepository:
+  github.com/RazorBold/golang_backend1/internal/cache:
+    interfaces:
+      Cache:

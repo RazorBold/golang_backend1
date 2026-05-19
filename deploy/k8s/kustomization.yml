@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: iot-platform
+
+resources:
+  - namespace.yml
+  - configmap.yml
+  - secret.yml
+  - postgres-statefulset.yml
+  - redis-deployment.yml
+  - rabbitmq-statefulset.yml
+  - api-deployment.yml
+  - api-hpa.yml
+  - worker-deployment.yml
+  - migrate-job.yml
+  - ingress.yml

@@ -1,0 +1,23 @@
+meta {
+  name: Get Latest Telemetry
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/v1/devices/{{deviceId}}/latest
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("has payload", function() {
+    expect(res.body.data.payload).to.be.an("object");
+  });
+}

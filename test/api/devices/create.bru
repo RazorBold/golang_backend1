@@ -1,0 +1,36 @@
+meta {
+  name: Create Device
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/v1/applications/{{appId}}/devices
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Sensor-01",
+    "type": "sensor",
+    "metadata": {
+      "location": "greenhouse-a",
+      "firmware": "v1.2.0"
+    }
+  }
+}
+
+script:post-response {
+  if (res.status === 201) {
+    bru.setEnvVar("deviceId", res.body.data.id);
+  }
+}

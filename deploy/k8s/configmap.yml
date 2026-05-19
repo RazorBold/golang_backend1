@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iot-config
+  namespace: iot-platform
+data:
+  APP_ENV: "production"
+  APP_PORT: "8080"
+  DATABASE_URL: "postgres://postgres:secret@postgres-svc:5432/iot_platform?sslmode=disable"
+  REDIS_ADDR: "redis-svc:6379"
+  REDIS_PASSWORD: ""
+  RABBITMQ_URL: "amqp://guest:guest@rabbitmq-svc:5672/"
+  JWT_ACCESS_TOKEN_TTL: "15"
+  JWT_REFRESH_TOKEN_TTL: "7"

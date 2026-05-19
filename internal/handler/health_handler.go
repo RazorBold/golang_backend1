@@ -19,12 +19,23 @@ func NewHealthHandler(db *pgxpool.Pool, redis *cache.RedisClient) *HealthHandler
 	return &HealthHandler{db: db, redis: redis}
 }
 
-// Live — liveness probe: server nyala atau tidak
+// Live godoc
+// @Summary      Liveness probe
+// @Tags         ops
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Router       /health [get]
 func (h *HealthHandler) Live(c *fiber.Ctx) error {
 	return response.OK(c, fiber.Map{"status": "alive"})
 }
 
-// Ready — readiness probe: cek koneksi DB dan Redis
+// Ready godoc
+// @Summary      Readiness probe (checks DB + Redis)
+// @Tags         ops
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Failure      503  {object}  map[string]interface{}
+// @Router       /ready [get]
 func (h *HealthHandler) Ready(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(c.Context(), 3*time.Second)
 	defer cancel()

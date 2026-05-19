@@ -1,7 +1,7 @@
 .PHONY: run build test lint swag mock tidy \
         migrate-up migrate-down migrate-status \
-        docker-up docker-down docker-logs \
-        k6
+        docker-up docker-down docker-logs docker-build \
+        observability k6
 
 # ── Development ─────────────────────────────────────────────
 run:
@@ -34,7 +34,7 @@ lint:
 
 # ── Code Generation ──────────────────────────────────────────
 swag:
-	swag init -g cmd/server/main.go -o docs/
+	swag init -g cmd/server/main.go --output docs
 
 mock:
 	mockery --all --dir internal/repository --output internal/mocks
@@ -53,6 +53,10 @@ migrate-status:
 	migrate -path db/migrations -database "$(DATABASE_URL)" version
 
 # ── Docker ───────────────────────────────────────────────────
+docker-build:
+	docker build -t iot-api:latest -f Dockerfile .
+	docker build -t iot-worker:latest -f Dockerfile.worker .
+
 docker-up:
 	docker compose up -d postgres redis rabbitmq
 
@@ -62,8 +66,14 @@ docker-up-all:
 docker-down:
 	docker compose down
 
+docker-down-volumes:
+	docker compose down -v
+
 docker-logs:
-	docker compose logs -f api
+	docker compose logs -f api worker
+
+observability:
+	docker compose --profile observability up -d
 
 # ── Load Test ────────────────────────────────────────────────
 k6:

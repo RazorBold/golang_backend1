@@ -1,0 +1,19 @@
+# Binaries
+bin/
+*.exe
+
+# Environment — JANGAN pernah commit ini
+.env
+
+# Go
+vendor/
+coverage.out
+coverage.html
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

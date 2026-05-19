@@ -1,0 +1,40 @@
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  enable:
+    - errcheck       # semua error harus di-handle
+    - govet          # suspicious Go constructs
+    - staticcheck    # advanced static analysis
+    - gosec          # security issues
+    - gofmt          # formatting
+    - goimports      # import ordering
+    - revive         # style consistency
+    - misspell       # typo di comment/string
+    - unconvert      # unnecessary type conversion
+    - unparam        # unused function params
+    - bodyclose      # http response body harus di-close
+    - noctx          # http request tanpa context
+
+linters-settings:
+  gosec:
+    excludes:
+      - G401  # MD5 — kita tidak pakai
+      - G501  # MD5 import
+  revive:
+    rules:
+      - name: exported
+        disabled: true  # tidak wajibkan godoc di semua exported
+
+issues:
+  exclude-rules:
+    # test files boleh pakai t.Fatal, tidak perlu errcheck ketat
+    - path: _test\.go
+      linters:
+        - errcheck
+        - gosec
+    # migration files bukan Go
+    - path: db/migrations
+      linters:
+        - all
