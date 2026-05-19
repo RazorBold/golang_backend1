@@ -1,8 +1,3 @@
-// main.go
+//go:build ignore
+
 package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, World!")
-}
